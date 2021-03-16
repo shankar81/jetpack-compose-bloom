@@ -25,17 +25,17 @@ private val DarkColorPalette = darkColors(
     primary = green900,
     secondary = green300,
     background = gray,
-    surface = white.copy(alpha = 15F),
+    surface = white.copy(alpha = 0.5F),
     onPrimary = white,
     onSecondary = gray,
     onBackground = white,
-    onSurface = white.copy(alpha = 85F),
+    onSurface = white.copy(alpha = 0.85F),
 )
 
 private val LightColorPalette = lightColors(
     primary = pink100,
     secondary = pink900,
-    surface = white.copy(alpha = 85F),
+    surface = white.copy(alpha = 0.85F),
     onPrimary = gray,
     onSecondary = white,
     onBackground = gray,

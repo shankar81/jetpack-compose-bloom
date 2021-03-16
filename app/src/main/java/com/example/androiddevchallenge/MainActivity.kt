@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 // Start building your app here!
 @Composable
 fun MyApp() {
-    Surface(color = MaterialTheme.colors.background) {
+    Surface(color = MaterialTheme.colors.primary) {
         Text(text = "Ready... Set... GO!")
     }
 }

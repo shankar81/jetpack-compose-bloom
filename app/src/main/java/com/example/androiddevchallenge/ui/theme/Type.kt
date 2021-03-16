@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.example.androiddevchallenge.R
 
 val NunitoSans = FontFamily(
-    Font(R.font.nunito_sans_light, FontWeight.Light),
+    Font(R.font.nunito_sans_regular, FontWeight.Light),
     Font(R.font.nunito_sans_semi_bold, FontWeight.SemiBold),
     Font(R.font.nunito_sans_bold, FontWeight.Bold),
 )
@@ -41,14 +41,14 @@ val typography = Typography(
     h2 = TextStyle(
         fontFamily = NunitoSans,
         fontWeight = FontWeight.Bold,
-        fontSize = 16.sp,
-        letterSpacing = 0.sp
+        fontSize = 14.sp,
+        letterSpacing = 15.sp
     ),
     subtitle1 = TextStyle(
         fontFamily = NunitoSans,
         fontWeight = FontWeight.Light,
-        fontSize = 14.sp,
-        letterSpacing = 15.sp
+        fontSize = 16.sp,
+        letterSpacing = 0.sp
     ),
     body1 = TextStyle(
         fontFamily = NunitoSans,

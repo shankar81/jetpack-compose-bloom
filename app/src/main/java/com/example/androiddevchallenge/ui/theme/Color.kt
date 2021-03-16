@@ -17,11 +17,15 @@ package com.example.androiddevchallenge.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val pink100 = Color(0xfffff1f1)
-val pink900 = Color(0x333f2c2c)
-val white = Color(0xffffffff)
-val gray = Color(0x22232323)
+val pink100 = Color(android.graphics.Color.parseColor("#FFF1F1"))
+val pink900 = Color(android.graphics.Color.parseColor("#3F2C2C"))
+val white = Color(android.graphics.Color.parseColor("#FFFFFF"))
+val gray = Color(
+    android.graphics.Color.parseColor(
+        "#232323"
+    )
+)
 
-val green900 = Color(0x222d3b2d)
-val green300 = Color(0xbbb8c9b8)
+val green900 = Color(android.graphics.Color.parseColor("#2D3B2D"))
+val green300 = Color(android.graphics.Color.parseColor("#B8C9B8"))
 
