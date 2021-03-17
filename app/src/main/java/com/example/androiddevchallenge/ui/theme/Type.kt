@@ -42,7 +42,7 @@ val typography = Typography(
         fontFamily = NunitoSans,
         fontWeight = FontWeight.Bold,
         fontSize = 14.sp,
-        letterSpacing = 15.sp
+        letterSpacing = .15.sp
     ),
     subtitle1 = TextStyle(
         fontFamily = NunitoSans,

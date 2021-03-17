@@ -39,11 +39,7 @@ fun LoginContent(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            text = "Log in with email",
-            style = MaterialTheme.typography.h1,
-            color = MaterialTheme.colors.onBackground
-        )
+        Heading(label = "Log in with email")
         LoginInput(
             placeholder = "Email address"
         )
@@ -66,7 +62,8 @@ fun LoginContent(modifier: Modifier = Modifier) {
 fun LoginInput(
     modifier: Modifier = Modifier,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    placeholder: String
+    placeholder: String,
+    leadingIcon: (@Composable () -> Unit)? = null
 ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
@@ -80,7 +77,8 @@ fun LoginInput(
             )
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(textColor = MaterialTheme.colors.onBackground),
-        visualTransformation = visualTransformation
+        visualTransformation = visualTransformation,
+        leadingIcon = leadingIcon
     )
 }
 

@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.androiddevchallenge.ui.theme.MyTheme
+import dev.chrisbanes.accompanist.coil.CoilImage
 
 class Welcome : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +39,8 @@ fun Background(content: @Composable () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        Image(
-            painter = painterResource(id = if (isDarkMode) R.drawable.ic_dark_welcome_bg else R.drawable.ic_light_welcome_bg),
+        CoilImage(
+            data = if (isDarkMode) R.drawable.ic_dark_welcome_bg else R.drawable.ic_light_welcome_bg,
             contentDescription = "welcome Background",
             contentScale = ContentScale.FillBounds
         )
@@ -60,16 +61,16 @@ fun Container() {
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                Image(
-                    painter = painterResource(id = if (isDarkMode) R.drawable.ic_dark_welcome_illos else R.drawable.ic_light_welcome_illos),
+                CoilImage(
+                    data = if (isDarkMode) R.drawable.ic_dark_welcome_illos else R.drawable.ic_light_welcome_illos,
                     contentDescription = null,
                     modifier = Modifier
                         .padding(top = 56.dp, bottom = 48.dp)
                         .absoluteOffset(x = 64.dp)
                         .fillMaxWidth()
                 )
-                Image(
-                    painter = painterResource(id = if (isDarkMode) R.drawable.ic_dark_logo else R.drawable.ic_light_logo),
+                CoilImage(
+                    data = if (isDarkMode) R.drawable.ic_dark_logo else R.drawable.ic_light_logo,
                     contentDescription = "Logo",
                 )
                 Text(
