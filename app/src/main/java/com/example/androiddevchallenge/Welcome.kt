@@ -78,24 +78,31 @@ fun Container() {
                     color = MaterialTheme.colors.onBackground,
                     lineHeight = 32.sp
                 )
-                Button(
-                    contentPadding = PaddingValues(16.dp),
-                    shape = MaterialTheme.shapes.medium,
-                    onClick = { },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.secondary
-                    ),
-                    modifier = Modifier
-                        .padding(top = 40.dp, bottom = 8.dp)
-                        .fillMaxWidth()
-                ) {
-                    Text(text = "Create account", color = MaterialTheme.colors.background)
-                }
+                PrimaryButton(
+                    label = "Create account",
+                    modifier = Modifier.padding(top = 40.dp, bottom = 8.dp)
+                ) {}
                 TextButton(onClick = { }) {
                     Text(text = "Log in", color = MaterialTheme.colors.secondary)
                 }
             }
         }
+    }
+}
+
+@Composable
+fun PrimaryButton(modifier: Modifier = Modifier, label: String, onClick: () -> Unit) {
+    Button(
+        contentPadding = PaddingValues(16.dp),
+        shape = MaterialTheme.shapes.medium,
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colors.secondary
+        ),
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        Text(text = label, color = MaterialTheme.colors.background)
     }
 }
 
