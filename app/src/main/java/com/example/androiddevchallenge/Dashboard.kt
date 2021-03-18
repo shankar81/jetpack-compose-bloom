@@ -3,14 +3,20 @@ package com.example.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,7 +30,6 @@ class Plant(
     val name: String,
     val image: Int,
     val description: String = "This is description",
-    val isChecked: Boolean = false
 )
 
 val themes = listOf(
@@ -72,7 +77,10 @@ fun DashboardContainer(modifier: Modifier = Modifier) {
             })
         Heading(label = "Browse themes")
         ThemeList()
-        Heading(label = "Design your home garden", modifier = Modifier.padding(top = 16.dp))
+        Heading(
+            label = "Design your home garden",
+            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+        )
         PlantList()
     }
 }
@@ -105,21 +113,23 @@ fun ThemeList(modifier: Modifier = Modifier) {
 @Composable
 fun ThemeCard(modifier: Modifier = Modifier, name: String, image: Int) {
     Card(
-        modifier = modifier.size(140.dp),
-        backgroundColor = MaterialTheme.colors.background,
-        shape = RoundedCornerShape(8.dp),
-        elevation = 6.dp
+        modifier = modifier
+            .size(140.dp)
+            .clickable {},
+        backgroundColor = MaterialTheme.colors.onSecondary,
+        shape = RoundedCornerShape(4.dp),
+        elevation = 6.dp,
     ) {
         Column {
             CoilImage(
-                modifier = Modifier.weight(0.75f),
+                modifier = Modifier.weight(0.73f),
                 data = image,
                 contentDescription = name,
                 contentScale = ContentScale.FillBounds
             )
             Text(
                 modifier = Modifier
-                    .weight(0.25f)
+                    .weight(0.27f)
                     .padding(horizontal = 16.dp)
                     .wrapContentHeight(align = Alignment.CenterVertically),
                 text = name,
@@ -133,15 +143,13 @@ fun ThemeCard(modifier: Modifier = Modifier, name: String, image: Int) {
 @Composable
 fun PlantList(modifier: Modifier = Modifier) {
     LazyColumn(modifier) {
-        items(plants.size) {
+        items(plants.size) { index ->
             PlantItem(
                 Modifier
-                    .padding(vertical = 8.dp)
-                    .padding(end = 16.dp),
-                name = plants[it].name,
-                image = plants[it].image,
-                description = plants[it].description,
-                isChecked = plants[it].isChecked,
+                    .padding(bottom = 8.dp),
+                name = plants[index].name,
+                image = plants[index].image,
+                description = plants[index].description,
             )
         }
     }
@@ -153,9 +161,64 @@ fun PlantItem(
     name: String,
     image: Int,
     description: String,
-    isChecked: Boolean
 ) {
+    var isChecked by remember { mutableStateOf(false) }
+    Row(
+        modifier
+            .height(75.dp)
+    ) {
+        CoilImage(
+            modifier = Modifier
+                .weight(0.20f)
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(8.dp)),
+            data = image,
+            contentDescription = name,
+            contentScale = ContentScale.FillBounds
+        )
+        Spacer(modifier = modifier.weight(0.05f))
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.75f)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight(), verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = name,
+                        style = MaterialTheme.typography.h2,
+                        color = MaterialTheme.colors.onBackground
+                    )
+                    Text(
+                        text = description,
+                        style = MaterialTheme.typography.body1,
+                        color = MaterialTheme.colors.onBackground
+                    )
+                }
+                BloomCheckbox(isChecked) { isChecked = it }
+            }
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(2.dp),
+                color = MaterialTheme.colors.onBackground,
+                thickness = 3.dp
+            )
+        }
+    }
+}
 
+@Composable
+fun BloomCheckbox(isChecked: Boolean, onCheckedChange: ((Boolean) -> Unit)? = null) {
+    Checkbox(checked = isChecked, onCheckedChange = onCheckedChange)
 }
 
 @Preview(showBackground = true)
