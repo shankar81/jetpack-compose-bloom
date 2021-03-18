@@ -18,9 +18,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import dev.chrisbanes.accompanist.coil.CoilImage
 
@@ -65,7 +68,7 @@ class Dashboard : ComponentActivity() {
 
 @Composable
 fun DashboardContainer(modifier: Modifier = Modifier) {
-    Column(modifier) {
+    Column(modifier.fillMaxSize()) {
         LoginInput(
             modifier = Modifier.padding(vertical = 16.dp),
             placeholder = "Search",
@@ -144,7 +147,7 @@ fun ThemeCard(modifier: Modifier = Modifier, name: String, image: Int) {
 fun PlantList(modifier: Modifier = Modifier) {
     LazyColumn(modifier) {
         items(plants.size) { index ->
-            PlantItem(
+            PlantConstraintItem(
                 Modifier
                     .padding(bottom = 8.dp),
                 name = plants[index].name,
@@ -155,6 +158,7 @@ fun PlantList(modifier: Modifier = Modifier) {
     }
 }
 
+// Highly nested layout
 @Composable
 fun PlantItem(
     modifier: Modifier = Modifier,
@@ -203,7 +207,7 @@ fun PlantItem(
                         color = MaterialTheme.colors.onBackground
                     )
                 }
-                BloomCheckbox(isChecked) { isChecked = it }
+                BloomCheckbox(isChecked = isChecked) { isChecked = it }
             }
             Divider(
                 modifier = Modifier
@@ -216,9 +220,95 @@ fun PlantItem(
     }
 }
 
+// Less nested layout
 @Composable
-fun BloomCheckbox(isChecked: Boolean, onCheckedChange: ((Boolean) -> Unit)? = null) {
-    Checkbox(checked = isChecked, onCheckedChange = onCheckedChange)
+fun PlantConstraintItem(
+    modifier: Modifier = Modifier,
+    name: String,
+    image: Int,
+    description: String,
+) {
+    var isChecked by remember { mutableStateOf(false) }
+    ConstraintLayout(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Max)
+            .padding(bottom = 8.dp, end = 16.dp),
+        constraintSet = plantConstraints()
+    ) {
+        CoilImage(
+            modifier = Modifier
+                .layoutId("image")
+                .size(80.dp)
+                .clip(RoundedCornerShape(8.dp)),
+            data = image,
+            contentDescription = name,
+            contentScale = ContentScale.FillBounds
+        )
+        Column(
+            modifier = Modifier
+                .layoutId("content")
+        ) {
+            Text(
+                text = name,
+                style = MaterialTheme.typography.h2,
+                color = MaterialTheme.colors.onBackground,
+            )
+            Text(
+                text = description,
+                style = MaterialTheme.typography.body1,
+                color = MaterialTheme.colors.onBackground,
+            )
+        }
+        Divider(
+            modifier = Modifier
+                .layoutId("divider"),
+            thickness = 1.dp,
+            startIndent = 45.dp
+        )
+        BloomCheckbox(modifier = Modifier.layoutId("checkbox"), isChecked = isChecked) {
+            isChecked = it
+        }
+    }
+}
+
+private fun plantConstraints(): ConstraintSet {
+    return ConstraintSet {
+        val image = createRefFor("image")
+        val content = createRefFor("content")
+        val divider = createRefFor("divider")
+        val checkbox = createRefFor("checkbox")
+
+        constrain(image) {
+            start.linkTo(parent.start)
+        }
+
+        constrain(content) {
+            start.linkTo(image.end, margin = 8.dp)
+            centerVerticallyTo(parent)
+        }
+
+        constrain(divider) {
+            start.linkTo(content.start)
+            end.linkTo(parent.end)
+            bottom.linkTo(parent.bottom)
+        }
+
+        constrain(checkbox) {
+            end.linkTo(parent.end)
+            top.linkTo(parent.top)
+            bottom.linkTo(parent.bottom)
+        }
+    }
+}
+
+@Composable
+fun BloomCheckbox(
+    modifier: Modifier = Modifier,
+    isChecked: Boolean,
+    onCheckedChange: ((Boolean) -> Unit)? = null
+) {
+    Checkbox(modifier = modifier, checked = isChecked, onCheckedChange = onCheckedChange)
 }
 
 @Preview(showBackground = true)
