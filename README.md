@@ -2,7 +2,7 @@
 
 ## :scroll: Description
 
-This is a meditating application.
+This is a home garden solution application.
 
 ## :bulb: Motivation and Context
 
