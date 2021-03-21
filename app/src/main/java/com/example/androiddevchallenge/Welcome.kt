@@ -1,35 +1,22 @@
 package com.example.androiddevchallenge
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.navigate
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import dev.chrisbanes.accompanist.coil.CoilImage
 
-class Welcome : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MyTheme {
-                Container()
-            }
-        }
-    }
+@Composable
+fun Welcome(navController: NavHostController) {
+    Container(navController)
 }
 
 @Composable
@@ -49,7 +36,7 @@ fun Background(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun Container() {
+fun Container(navController: NavHostController) {
     val isDarkMode = !MaterialTheme.colors.isLight
     Surface(
         color = MaterialTheme.colors.primary,
@@ -72,6 +59,8 @@ fun Container() {
                 CoilImage(
                     data = if (isDarkMode) R.drawable.ic_dark_logo else R.drawable.ic_light_logo,
                     contentDescription = "Logo",
+                    modifier = Modifier.height(50.dp),
+                    contentScale = ContentScale.FillHeight
                 )
                 Text(
                     text = "Beautiful home garden solutions",
@@ -82,8 +71,8 @@ fun Container() {
                 PrimaryButton(
                     label = "Create account",
                     modifier = Modifier.padding(top = 40.dp, bottom = 8.dp)
-                ) {}
-                TextButton(onClick = { }) {
+                ) { navController.navigate("Login") }
+                TextButton(onClick = { navController.navigate("Login") }) {
                     Text(text = "Log in", color = MaterialTheme.colors.secondary)
                 }
             }
@@ -104,13 +93,5 @@ fun PrimaryButton(modifier: Modifier = Modifier, label: String, onClick: () -> U
             .fillMaxWidth()
     ) {
         Text(text = label, color = MaterialTheme.colors.background)
-    }
-}
-
-@Preview(showBackground = true, widthDp = 360, heightDp = 640)
-@Composable
-fun DefaultPreview() {
-    MyTheme {
-        Container()
     }
 }

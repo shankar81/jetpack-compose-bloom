@@ -1,9 +1,5 @@
 package com.example.androiddevchallenge
 
-import android.os.Bundle
-import android.text.Layout
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -14,24 +10,20 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.navigate
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
-class Login : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MyTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    LoginContent()
-                }
-            }
-        }
+@Composable
+fun Login(navController: NavHostController) {
+    // A surface container using the 'background' color from the theme
+    Surface(color = MaterialTheme.colors.background) {
+        LoginContent(Modifier, navController)
     }
 }
 
 @Composable
-fun LoginContent(modifier: Modifier = Modifier) {
+fun LoginContent(modifier: Modifier = Modifier, navController: NavHostController) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -54,7 +46,9 @@ fun LoginContent(modifier: Modifier = Modifier) {
             modifier = Modifier.padding(vertical = 8.dp),
             textAlign = TextAlign.Center
         )
-        PrimaryButton(label = "Log in") {}
+        PrimaryButton(label = "Log in") {
+            navController.navigate("Home")
+        }
     }
 }
 
@@ -80,15 +74,4 @@ fun LoginInput(
         visualTransformation = visualTransformation,
         leadingIcon = leadingIcon
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview2() {
-    MyTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(color = MaterialTheme.colors.background) {
-            LoginContent()
-        }
-    }
 }

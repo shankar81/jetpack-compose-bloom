@@ -1,8 +1,5 @@
 package com.example.androiddevchallenge
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.foundation.clickable
@@ -24,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
+import androidx.navigation.NavHostController
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import dev.chrisbanes.accompanist.coil.CoilImage
 
@@ -52,17 +50,10 @@ val plants = listOf(
     Plant("Pothos", R.drawable.plant6),
 )
 
-class Dashboard : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MyTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    DashboardContainer(modifier = Modifier.padding(16.dp))
-                }
-            }
-        }
+@Composable
+fun Dashboard(navController: NavHostController) {
+    Surface(color = MaterialTheme.colors.background) {
+        DashboardContainer(modifier = Modifier.padding(16.dp))
     }
 }
 
